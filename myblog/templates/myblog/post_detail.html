@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Matrix Admin</title>
+<title>baza Admin</title>
 <meta charset="UTF-8" />
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
 <link rel="stylesheet" href="{% static 'css/bootstrap-responsive.min.css' %}" />
@@ -12,14 +12,21 @@
 <link rel="stylesheet" href="{% static 'css/matrix-style.css' %}" />
 <link rel="stylesheet" href="{% static 'css/matrix-media.css' %}" />
 <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
 <link rel="stylesheet" href="{% static 'css/jquery.gritter.css' %}" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
 <!--Header-part-->
-<div id="header">
-  <h1><a href="dashboard.html">Baza Admin</a></h1>
+<div id="header" tyle="background-color: rgb(101,9,9);">
+  <img src="{% static 'img/574cd3b0-2824-4d88-a421-2daeab7abe2e.png' %}" alt="Logo" style="margin-top: -65px" />
 </div>
 <!--close-Header-part--> 
 <!--top-Header-menu-->
@@ -37,10 +44,13 @@
 </div>
 <!--close-top-Header-menu-->
 <!--start-top-serch-->
-<div id="search">
-  <input type="text" placeholder="Search here..."/>
+<form action="" method="GET">
+  <div id="search">
+  <input type="text" placeholder="Search here..." name="q" value="{{ request.GET.get.q }}" />
   <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
 </div>
+</form>
+
 <!--close-top-serch-->
 <!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
@@ -55,9 +65,9 @@
     </li>
 
 
-     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Physics</span> <span class="label label-important">{{ notification_count2 }}</span></a>
+     <li class="submenu"> <a href=""><i class="icon icon-th-list"></i> <span>Physics</span> <span class="label label-important">{{ notification_count2 }}</span></a>
       <ul>
-        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+         <li class=""><a title="" href="{% url 'physics' %}"><span class="text">posts</span></a></li> 
         
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
@@ -68,7 +78,8 @@
 
      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Chemistry</span> <span class="label label-important">{{ notification_count3 }}</span></a>
       <ul>
-         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+         <li class=""><a title="" href="{% url 'chemistry' %}"><span class="text">posts</span></a></li>
+
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -77,7 +88,7 @@
      
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Biology</span> <span class="label label-important">{{ notification_count4 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+       <li class=""><a title="" href="{% url 'biology' %}"><span class="text">posts</span></a></li> 
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -85,14 +96,16 @@
 
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Geography</span> <span class="label label-important">{{ notification_count8 }}</span></a>
       <ul>
-        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+        <li class=""><a title="" href="{% url 'geography' %}"><span class="text">posts</span></a></li> 
+
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
     
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>History</span> <span class="label label-important">{{ notification_count7 }}</span></a>
       <ul>
-        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+        <li class=""><a title="" href="{% url 'history' %}"><span class="text">posts</span></a></li>
+
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -100,7 +113,9 @@
 
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Entrepreneurship</span> <span class="label label-important">{{ notification_count9 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>   
+
+       <li class=""><a title="" href="{% url 'entrepreneurship' %}"><span class="text">posts</span></a></li>
+        
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -108,7 +123,8 @@
 
      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Literature</span> <span class="label label-important">{{ notification_count10 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>   
+        <li class=""><a title="" href="{% url 'literature' %}"><span class="text">posts</span></a></li>
+
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -116,7 +132,7 @@
 
      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Economic</span> <span class="label label-important">{{ notification_count6 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>   
+       <li class=""><a title="" href="{% url 'economics' %}"><span class="text">posts</span></a></li>  
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -128,7 +144,7 @@
 
      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Computer Science</span> <span class="label label-important">{{ notification_count5 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+       <li class=""><a title="" href="{% url 'computer' %}"><span class="text">posts</span></a></li>
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -139,7 +155,7 @@
 <!--sidebar-menu-->
 
 <!--main-container-part-->
-<div id="content">
+<div id="content" style="background-color: white">
 <!--End-breadcrumbs-->
 
 <!--Action boxes-->
@@ -152,37 +168,45 @@
 
     
 <!--End-Action boxes-->    
- 
-    <hr/>
+ <hr/>
     <!--added post-->
-    <div class="row-fluid" style="width: 1900px; margin-left: 10px">
+    <div class="row-fluid" style="width: 1900px; margin-left: -10px">
       <div class="span6">
         <div class="widget-box">
           <div class="user-thumb"> <img width="40" height="40" alt="User" src="{% static 'img/demo/av1.jpg' %}"> </div>
                 <div class="article-post"> <span class="user-info"></span>
           <h1>{{ post.title }}</h1>
-          <pre><code>{{ post.text|linebreaksbr }}</code></pre>
+          <p style="background-color: lightgrey">{{ post.text|linebreaksbr }}</p>
           <hr>
+
             <h4 style="margin-left: 400px">All Answers </h4>
           {% for Post in post.answers.all  %}
           <div class="widget-content nopadding collapse in" id="collapseG2">
             <ul class="recent-posts">
               <li>
-                
-                <br/>
-                 <pre><code>
+    
+                 <p style="width: auto; background-color:lightgrey">
                    {{ Post.text| linebreaksbr }}
-                 </code></pre>
-                  <hr>
-              </li>
-              </li>
-            </ul>
-            {% endfor %}
+                 </p>
+            <hr>
 
-            <button class="btn btn-warning btn-mini"><a href="{% url 'answer' pk=post.pk %}">Reply</a></button>
+            
+                 <!--comment about the post-->
+
+                 
+                  </li>
+                </ul>
+                  
+          
+  {% endfor %}
+
+            
+ 
+            
           </div>
         </div>
 
+    <
         
 
 
@@ -195,6 +219,17 @@
 
 
 <!--end-Footer-part-->
+
+<script>
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
 
 <script src="{% static 'js/excanvas.min.js' %}"></script> 
 <script src="{% static 'js/jquery.min.js' %}"></script> 

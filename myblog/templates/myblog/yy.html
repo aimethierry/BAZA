@@ -1,0 +1,20 @@
+ <!--<form class="post-form" method="POST" action="">
+                 {% csrf_token %}
+                 {{ form.as_p }}
+                   
+                   <input type="submit" value="create" style="background-color: green">
+                 </form>-->
+
+                  {% for Post in filtered %}
+          <div class="widget-content nopadding collapse in" id="collapseG2">
+            <ul class="recent-posts">
+              <li>
+                <div class="user-thumb"> <img width="40" height="40" alt="User" src="" style="margin-top: 0px"> </div>
+                <div class="article-post"> <span class="user-info">{{ Profile.title }} </span>
+                <br/>
+               <p><a href="{% url 'post_detail' pk=Post.pk  %}">{{ Post.title }}</a></h4>
+                 <p style="width: auto; background-color: lightgrey">
+                   {{ Post.text| linebreaksbr }}
+                 </p>
+            </ul>
+            {% endfor %}

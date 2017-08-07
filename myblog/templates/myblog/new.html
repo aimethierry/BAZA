@@ -1,0 +1,308 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="This is social network html5 template available in themeforest......" />
+		<meta name="keywords" content="Social Network, Social Media, Make Friends, Newsfeed, Profile Page" />
+		<meta name="robots" content="index, follow" />
+		<title>Baza</title>
+
+    <!-- Stylesheets
+    ================================================= -->
+		<link rel="stylesheet" href="{% static 'okcss/bootstrap.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'okcss/style.css' %}" />
+   <!--  <link rel="stylesheet" href="{% static 'okcss/ionicons.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'okcss/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap-wysihtml5.css' %}" /> -->
+    <link href="{% static 'okcss/emoji.css' %}" rel="stylesheet">
+    <!--Google Font-->
+    
+<!-- jQuery library -->
+<!-- Latest compiled JavaScript -->
+    <!--Favicon-->
+    <!-- <link rel="shortcut icon" type="image/png" href="{% static 'okimages/fav.png' %}"/> -->
+	</head>
+  <body>
+      <a href=""  id ="clock" class="btn btn-primary" style="display: hidden"></a>
+    <!-- Header
+    ================================================= -->
+		<header id="header">
+      <nav class="navbar navbar-default navbar-fixed-top menu">
+        <div class="container">
+
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="{% url 'new' %}"><img src="{% static '574cd3b0-2824-4d88-a421-2daeab7abe2e.png' %}"  -->alt="logo" /></a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right main-menu">
+              
+              
+              <li class="dropdown"><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+            <form class="navbar-form navbar-right hidden-sm">
+              <div class="form-group">
+                <i class="icon ion-android-search"></i>
+                <input type="text" class="form-control" placeholder="Search friends, photos, videos">
+              </div>
+            </form>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+      </nav>
+    </header>
+    <!--Header End-->
+
+    <div id="page-contents">
+    	<div class="container">
+    		<div class="row">
+
+          <!-- Newsfeed Common Side Bar Left
+          ================================================= -->
+    			<div class="col-md-3 static">
+            <div class="profile-card">
+            	<!-- <img src="{% static 'img/3.jpg'  %}" alt="user" class="profile-photo" /> -->
+            	<h5><a href="timeline.html" class="text-white">Sarah Cruiz</a></h5>
+            	<a href="#" class="text-white"><i class="ion ion-android-person-add"></i> 1,299 followers</a>
+            </div><!--profile card ends-->
+            <ul class="nav-news-feed">
+              <li><i class="icon ion-ios-paper"></i><div><a href="newsfeed.html">My Newsfeed</a></div></li>
+              <li><i class="icon ion-ios-people-outline"></i><div><a href="">Add Your Question</a></div></li>
+              
+              <li><i class="icon ion-chatboxes"></i><div><a href="newsfeed-messages.html">Messages</a></div></li>
+
+              <li><i class="icon ion-chatboxes"></i><div><a href="newsfeed-messages.html">Posted Question</a></div></li>
+
+              <li><i class="icon ion-images"></i><div><a href="newsfeed-images.html">Images</a></div></li>
+              <li><i class="icon ion-ios-videocam"></i><div><a href="newsfeed-videos.html">Videos</a></div></li>
+            </ul><!--news-feed links ends-->
+            
+          </div>
+    			<div class="col-md-7">
+
+            <!-- Post Create Box
+           
+            <div class="create-post">
+            	<div class="row">
+            		<div class="col-md-7 col-sm-7">
+                  <div class="form-group">
+                    <img src="{% static 'okimages/users/user-1.jpg' %}" alt="" class="profile-photo-md" />
+                     <form action="#" method="post" action="{% url 'project' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+           
+         
+          
+          <p>
+            <input name="submit" type="submit" id="submit" value="Submit Form" />
+            &nbsp;
+            <input name="reset" type="reset" id="reset" tabindex="5" value="Reset Form" />
+          </p>
+        </form>
+      </div>
+            	</div>
+            </div>
+
+
+            <!-- Post Content
+            ================================================= -->
+       <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" id="addqns">Add Your Question</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'new' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <input type="submit" value="send">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+<!-- the end of the post-->
+            <div class="post-content">
+              <!-- <img src="{% static 'img/3.jpg'  %}" alt="post-image" class="img-responsive post-image" /> -->
+              {% for Post in name %}
+              <div class="post-container">
+                <!-- <img src="{% static 'okimages/users/user-5.jpg'%}" alt="user" class="profile-photo-md pull-left" /> -->
+                <div class="post-detail">
+                  <div class="user-info">
+                    <h5><a href="timeline.html" class="profile-link">{{ Post.author }}</a> <span class="following">following</span></h5>
+                    <h6 class="text-muted">{{ Post.created_date }}</h6>
+                  </div>
+                  <div class="reaction">
+                    <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
+                    <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                  </div>
+                  <div class="line-divider"></div>
+                  <div class="post-text">
+                    <p>{{ Post.title }}<i class="em em-anguished"></i> <i class="em em-anguished">
+                    </i> <i class="em em-anguished"></i></p>
+                  </div>
+                  
+
+             <button><a href="{% url 'post_detail' pk=Post.pk  %}">Add Your Question</a></button>
+             <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#sm">Open Modal</button>
+            <hr>
+
+                  
+                </div>
+              </div>
+              {% endfor %} 
+            </div>
+            <br/>
+            
+
+            <!-- Modal -->
+  <div class="modal fade" id="sm" role="dialog">
+    <div class="modal-dialog">
+             <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post" >
+            {% csrf_token %}
+            {{ form.text }}
+            <input type="submit" value="send">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
+
+
+      <!--my modal text for answers of my question#############-->
+      <div class="modal fade" id="ans" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <form method="post" enctype="multipart/form-data" action="{% url 'new' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+            <!-- Post Content
+            ================================================= -->
+            
+
+            <!-- Post Content
+            ================================================= -->
+        
+
+          <!-- Newsfeed Common Side Bar Right
+          ================================================= -->
+    			
+              
+              </div>
+              
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+    		</div>
+
+
+
+<!-- Newsfeed Common Side Bar Right
+          ================================================= -->
+          <!--#########################################################################################################this end what is not closed-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  
+
+<script src="{% static 'okjs/jquery-3.1.1.min.js' %}"  />
+<script src="{% static 'okjs/bootstrap.min.js' %}"></script>
+<script src="{% static 'okjs/jquery.sticky-kit.min.js' %}"></script>
+<script src="{% static 'okjs/jquery.scrollbar.min.js' %}"></script>
+<script src="{% static 'okjs/script.js' %}"></script>
+<script src="{% static 'js/bootstrap-wysihtml5.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+       var red=$("#clock").trigger('click')
+       console.log("red")
+    $("#clock").change(function(){
+        $("#addqns").text("No dude")
+    });
+
+  });
+  function goPage (newURL) {
+      // if url is empty, skip the menu dividers and reset the menu selection to default
+      if (newURL != "") {
+      
+          // if url is "-", it is this page -- reset the menu:
+          if (newURL == "-" ) {
+              resetMenu();            
+          } 
+          // else, send page to designated URL            
+          else {  
+            document.location.href = newURL;
+          }
+      }
+  }
+function resetMenu() {
+   document.gomenu.selector.selectedIndex = 2;
+}
+</script>
+  </body>
+</html>

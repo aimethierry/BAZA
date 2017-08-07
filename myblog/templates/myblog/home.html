@@ -1,0 +1,378 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+Template Name: Education Board
+Author: <a href="http://www.os-templates.com/">OS Templates</a>
+Author URI: http://www.os-templates.com/
+Licence: Free to use under our free template licence terms
+Licence URI: http://www.os-templates.com/template-terms
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Baza</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="{% static 'homelayout/styles/layout.css' %}" type="text/css" />
+<script type="text/javascript" src="{% static 'homelayout/scripts/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'homelayout/scripts/jquery.ui.min.js' %}"></script>
+<!-- Homepage Specific -->
+<script type="text/javascript" src="{% static 'homelayout/scripts/galleryviewthemes/jquery.easing.1.3.js' %}"></script>
+<script type="text/javascript" src="{% static 'homelayout/scripts/galleryviewthemes/jquery.timers.1.2.js' %}"></script>
+<script type="text/javascript" src="{% static 'homelayout/scripts/galleryviewthemes/jquery.galleryview.2.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'homelayout/scripts/galleryviewthemes/jquery.galleryview.setup.js' %}"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- / Homepage Specific -->
+</head>
+<body>
+<div class="wrapper row1">
+  <div id="header" class="clear">
+    <div class="fl_left">
+      <h1><a href="index.html">Baza</a></h1>
+    </div>
+    <div class="fl_right">
+      <p><a href="" type="button" data-toggle="modal" data-target="#my">Add School</a> | <a href="" data-toggle="modal" data-target="#register">register</a> |  <a href="{% url 'login' %}" type="button" data-toggle="modal" data-target="#myModal">Teachers Login</a>  </p>
+
+
+
+     
+<!--end of the school modal form-->
+      <form action="#" method="post" id="sitesearch">
+        <fieldset>
+          <legend>Site Search</legend>
+          <input type="text" value="Search Our Website&hellip;" onfocus="this.value=(this.value=='Search Our Website&hellip;')? '' : this.value ;" />
+          <input type="image" src="{% static 'homelayout/images/search.gif'%}" id="search" alt="Search" />
+        </fieldset>
+      </form>
+    </div>
+    <div id="topnav">
+      <ul>
+        <li class="active"><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'project' %}">Supportable Project</a></li>
+        <li><a href="pages/full-width.html">Teachers</a></li>
+        <li><a href="pages/3-columns.html">Support</a></li>
+        <li><a href="pages/portfolio.html"></a></li>
+  
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+
+ <!--modal of the form1-->
+      <!-- Modal -->
+      
+  <div class="modal fade" id="my" role="dialog">
+
+    <div class="modal-dialog">    
+
+      <!-- Modal content-->
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+
+          <h4 class="modal-title">Register Your School</h4>
+        </div>
+        <form method="post" action="{% url 'save_school' %}">
+  {% csrf_token %}
+        <div class="modal-body">
+          <div class="form-group">
+
+      <label for="email">School Email:</label>{{ form.school_email }}
+      
+    </div>
+    <div class="form-group">
+      <label for="address">Adress</label>
+      {{ form.adress}}</div>
+
+      <label for="address">School Name</label>
+      {{ form.school_name }}
+    
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" required>Submit</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+</form>
+<!--end of the modal1-->
+
+
+<!--for registration ################################################################################################################################-->
+
+<div class="modal fade" id="register" role="dialog">
+
+    <div class="modal-dialog">    
+
+      <!-- Modal content-->
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+
+          <h4 class="modal-title">Register Your Account</h4>
+        </div>
+        <form method="post" action="{% url 'signup' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+            
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" required>Submit</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+</form>
+
+<!-- start of the second modal for teachers-->
+
+
+ <!--modal of the form1-->
+      <!-- Modal -->
+      
+  <div class="modal fade" id="myModal" role="dialog">
+
+    <div class="modal-dialog">    
+
+      <!-- Modal content-->
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+         
+
+          <h4 class="modal-title">Please SignIn</h4>
+        </div>
+        <form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+        <div class="modal-body">
+          <div class="form-group">
+
+      <label for="email">User Name</label>
+     {{ form.username }} 
+    </div>
+
+      <label for="address">password</label>
+       {{ form.password }}
+    
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" required>Login</button>
+        </div>
+
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+</form>
+
+
+<div class="wrapper row2">
+  <div id="hpage_featured" class="clear"> 
+    <!-- ####################################################################################################### -->
+    <div id="featured_slide">
+      <ul>
+        <li><img src="{% static 'homeimages/demo/4.jpg' %}" alt="" />
+          <div class="panel-overlay">
+            <h2>Baza</h2>
+            <p>No more confussion about when and how you will do it just post your question <a href="#">You will be answered  &raquo;</a></p>
+          </div>
+        </li>
+        <li><img src="{% static 'homeimages/demo/2.jpg' %}" alt="" /></li>
+        <li><img src="{% static 'homeimages/demo/3.jpg' %}" alt="" />
+          <div class="{% static 'homepanel-overlay' %}">
+            <h2>It is easy and Friendly so dont wait it's your time to ask</h2>
+            <p>Justolacus eger at pede felit in dictum sempus elit curabitur ipsum. Ametpellentum. <a href="#">Continue Reading &raquo;</a></p>
+          </div>
+        </li>
+        <li><img src="{% static 'homeimages/demo/1.jpg' %}" alt="" />
+          <div class="panel-overlay">
+            <h2>This will increase the performance of student</h2>
+            <p></a></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- ###### -->
+    <div class="intro clear">
+      <div class="welcome clear"><img class="imgl" src="{% static 'homeimages/demo/log.jpg' %}" alt="" width="100" height="100" />
+        <div class="fl_right">
+          <h2>Welcome to Baza</h2>
+          <p>Baza is here to help student in their daily activities in each level your are in order to share academic information so don't wait</p>
+        </div>
+      </div>
+      <div class="popular">
+        <h2>Most Popular Schools</h2>
+        <ul class="clear">
+          <li><a href="#">&raquo; Visiting the University Of Rwanda</a></li>
+          <li><a href="#">&raquo; Riviera High School</a></li>
+          <li><a href="#">&raquo; University Of Rwanda- College of Science and Techology </a></li>
+          <li><a href="#">&raquo; Green Hills Academy</a></li>
+          <li><a href="#">&raquo; Hope Accademy</a></li>
+          <li><a href="#">&raquo; Mount Kenya University</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- ####################################################################################################### --> 
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+<div class="wrapper row3">
+  <div id="container" class="clear"> 
+    <!-- ####################################################################################################### -->
+    <div id="homepage" class="clear"> 
+      <!-- ###### -->
+      <div id="content">
+        <div id="top_featured" class="clear">
+          <ul class="clear">
+            <li>
+              <h2>Science</h2>
+              <img src="{% static 'homeimages/demo/mathematics.jpg' %}" alt="" />
+              <p>Every Question about science scince we are able to solve them whether it's math or chemistry and others you will get your answer in a short time</p>
+              
+            </li>
+            <li class="last">
+              <h2>Arts</h2>
+              <img src="{% static 'homeimages/demo/music.jpg' %}" alt="" />
+              <p>Baza allow every one to share information through questions and others. It's not only science even arts so don't wait </p>
+              
+            </li>
+          </ul>
+        </div>
+        <div id="latestnews">
+          <h2>Latest News &amp; Events</h2>
+          <ul>
+            <li>
+              <p><strong>All valuable Projects we are able to look for investors </strong><br />
+              just post it its simple and easy  just go <a href="">Supportable Projects</a></p>
+              
+            </li>
+            <li>
+              <p><strong>Sentumquisque morbi dui congue tincidunt eu quis</strong><br />
+                You can use and modify the template for both personal and commercial use. You must keep all copyright information and credit links in the template and associated files. For more CSS templates visit Free Website Templates</a>&hellip;</p>
+              
+            </li>
+            <li class="last">
+              <p><strong>Sentumquisque morbi dui congue tincidunt eu quis</strong><br />
+                Vestassapede et donec ut est liberos sus et eget sed eget. Quisqueta habitur augue magnisl magna phasellus sagittitor&hellip;</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- ###### -->
+      <div id="column">
+        <div class="holder">
+          <h2>Take The Virtual Tour</h2>
+          <!-- Begin Flash Here - This is the correct method for W3C validation -->
+          <object type="application/x-shockwave-flash" data="https://www.youtube.com/v/vxAU88LxLis?version=3&amp;hl=en_US&amp;fs=1&amp;rel=0" width="300" height="250">
+            <param name="movie" value="https://www.youtube.com/v/vxAU88LxLis?version=3&amp;hl=en_US&amp;fs=1&amp;rel=0" />
+            <param name="wmode" value="opaque" />
+            <param name="quality" value="high" />
+            <param name="bgcolor" value="#E9E9E9" />
+            <param name="allowfullscreen" value="false" />
+            <param name="allowscriptaccess" value="never" />
+          </object>
+          <!-- End Flash Here -->
+          <p>Aliquatpede id pellus elit quis in nec consectetuer mattis duis in. Ipsumet ris morbi quis ac nulla aenean trisuscelerit nonummy augue et.</p>
+          <p class="readmore"><a href="#">Apply To The University Today &raquo;</a></p>
+        </div>
+        <div class="holder last">
+          <h2>Student &amp; Staff Representatives</h2>
+          <ul class="staffmembers">
+            <li class="clear"><img class="imgl" src="{% static 'homeimages/demo/80x80.gif' %}" alt="" />
+              <div class="fl_left">
+                <p><strong>Principals Name Here</strong></p>
+                <p>Principal / Headmaster</p>
+                <p><a href="#">View Full Profile &raquo;</a></p>
+              </div>
+            </li>
+            <li class="clear"><img class="imgl" src="{% static 'homeimages/demo/80x80.gif' %}" alt="" />
+              <div class="fl_left">
+                <p><strong>Another Name Goes Here</strong></p>
+                <p>Head of Student Access</p>
+                <p><a href="#">View Full Profile &raquo;</a></p>
+              </div>
+            </li>
+            <li class="clear"><img class="imgl" src="{% static 'homeimages/demo/80x80.gif' %}" alt="" />
+              <div class="fl_left">
+                <p><strong>Yet Another Name Here</strong></p>
+                <p>Student Union Representative</p>
+                <p><a href="#">View Full Profile &raquo;</a></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- ###### --> 
+    </div>
+    <!-- ####################################################################################################### --> 
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+<div class="wrapper row4">
+  <div id="footer" class="clear"> 
+    <!-- ####################################################################################################### -->
+    <div class="footbox">
+      <h2>Quick Links</h2>
+      <ul>
+        <li><a href="{% url 'home' %}">&raquo; Homepage</a></li>
+        <li><a href="{% url 'project' %}">&raquo; Supportable Projects</a></li>
+        <li><a href="{% url 'teachers' %}"> Teachers</a></li>
+        <li><a href="#">&raquo; Studentlogin</a></li>
+        <li><a href="#">&raquo; Teachers login</a></li>
+        <li><a href="#">&raquo; Product</a></li>
+      </ul>
+    </div>
+    <div class="footbox">
+      <h2>How To Find Us</h2>
+      <address>
+      Kigali/Kacyiru<br />
+      Postcode/Zip<br />
+      <br />
+      Tel: +250 787165015 or +250 787165015 or +250 787165015 <br />
+      Email: <a href="#">Baza@gmail.com</a>
+      </address>
+    </div>
+    <div class="fl_right">
+      <div id="social">
+        <h2>Connect With Us</h2>
+        <ul>
+          <li><a href="#"><img src="{% static 'homeimages/social/facebook.gif' %}" alt="" /></a></li>
+          <li><a href="#"><img src="{% static 'homeimages/social/twitter.gif' %}" alt="" /></a></li>
+          <li><a href="#"><img src="{% static 'homeimages/social/flickr.gif' %}" alt="" /></a></li>
+          <li><a href="#"><img src="{% static 'homeimages/social/youtube.gif' %}" alt="" /></a></li>
+        </ul>
+      </div>
+      <div id="newsletter" class="clear">
+        <form action="#" method="post">
+          <fieldset>
+            <legend>Subscribe To Our Newsletter:</legend>
+            <input type="text" value="Enter Email Here&hellip;" onfocus="this.value=(this.value=='Enter Email Here&hellip;')? '' : this.value ;" />
+            <input type="text" id="subscribe" value="Submit" />
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <!-- ####################################################################################################### --> 
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+<div class="wrapper">
+  <div id="copyright" class="clear">
+    <p class="fl_left">Copyright &copy; 2017 - All Rights Reserved </p>
+</div>
+</body>
+</html>

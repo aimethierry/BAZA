@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Matrix Admin</title>
+<title>baza Admin</title>
 <meta charset="UTF-8" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,12 +14,18 @@
 <link href="{% static 'font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
 <link rel="stylesheet" href="{% static 'css/jquery.gritter.css' %}" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
 </head>
 <body>
 
 <!--Header-part-->
-<div id="header">
-  <h1><a href="dashboard.html">Baza Admin</a></h1>
+<div id="header" tyle="background-color: rgb(101,9,9);">
+  <img src="{% static 'img/574cd3b0-2824-4d88-a421-2daeab7abe2e.png' %}" alt="Logo" style="margin-top: -65px" />
 </div>
 <!--close-Header-part--> 
 <!--top-Header-menu-->
@@ -37,10 +43,13 @@
 </div>
 <!--close-top-Header-menu-->
 <!--start-top-serch-->
-<div id="search">
-  <input type="text" placeholder="Search here..."/>
+<form action="" method="GET">
+  <div id="search">
+  <input type="text" placeholder="Search here..." name="q" value="{{ request.GET.get.q }}" />
   <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
 </div>
+</form>
+
 <!--close-top-serch-->
 <!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
@@ -55,7 +64,7 @@
     </li>
 
 
-     <li class="submenu"> <a href=""><i class="icon icon-th-list"></i> <span>Physics</span> <span class="label label-important">{{ notification_count2}}</span></a>
+     <li class="submenu"> <a href=""><i class="icon icon-th-list"></i> <span>Physics</span> <span class="label label-important">{{ notification_count2 }}</span></a>
       <ul>
          <li class=""><a title="" href="{% url 'physics' %}"><span class="text">posts</span></a></li> 
         
@@ -78,7 +87,7 @@
      
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Biology</span> <span class="label label-important">{{ notification_count4 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+       <li class=""><a title="" href="{% url 'biology' %}"><span class="text">posts</span></a></li> 
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -86,14 +95,16 @@
 
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Geography</span> <span class="label label-important">{{ notification_count8 }}</span></a>
       <ul>
-        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+        <li class=""><a title="" href="{% url 'geography' %}"><span class="text">posts</span></a></li> 
+
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
     
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>History</span> <span class="label label-important">{{ notification_count7 }}</span></a>
       <ul>
-        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+        <li class=""><a title="" href="{% url 'history' %}"><span class="text">posts</span></a></li>
+
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -101,7 +112,9 @@
 
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Entrepreneurship</span> <span class="label label-important">{{ notification_count9 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>   
+
+       <li class=""><a title="" href="{% url 'entrepreneurship' %}"><span class="text">posts</span></a></li>
+        
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -109,7 +122,8 @@
 
      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Literature</span> <span class="label label-important">{{ notification_count10 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>   
+        <li class=""><a title="" href="{% url 'literature' %}"><span class="text">posts</span></a></li>
+
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -117,7 +131,7 @@
 
      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Economic</span> <span class="label label-important">{{ notification_count6 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>   
+       <li class=""><a title="" href="{% url 'economics' %}"><span class="text">posts</span></a></li>  
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -129,7 +143,7 @@
 
      <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Computer Science</span> <span class="label label-important">{{ notification_count5 }}</span></a>
       <ul>
-       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Post</span> <span class="label label-important">6</span></a>
+       <li class=""><a title="" href="{% url 'computer' %}"><span class="text">posts</span></a></li>
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Question</span> <span class="label label-important"></span></a>
       </ul>
     </li>
@@ -140,11 +154,11 @@
 <!--sidebar-menu-->
 
 <!--main-container-part-->
-<div id="content" style="background-color: white">
+<div id="content">
 <!--End-breadcrumbs-->
 
 <!--Action boxes-->
-  <div class="container-fluid" style="background-color: white">
+  <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
         <li class="bg_lb"> <a href="{% url 'index' %}"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> My Dashboard </a> </li>
@@ -153,8 +167,8 @@
 <!--End-Action boxes-->    
 
 <!--Chart-box-->    
-    <div class="row-fluid" style="background-color: white">
-      <div class="widget-box" style="background-color: white">
+    <div class="row-fluid">
+      <div class="widget-box">
         </div>
         <div class="widget-content">
           <div class="row-fluid">
@@ -174,10 +188,10 @@
 <!--End-Chart-box--> 
     <hr/>
     <!--added post-->
-    <div class="row-fluid" style="width: 1900px; margin-left: 100px;background-color: white">
+    <div class="row-fluid" style="width: 1900px; margin-left: 100px;">
       <div class="span6" style="background-color: white">
         <div class="widget-box" style="background-color: white">
-          <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG2"><span class="icon"><i class="icon-chevron-down" style="background-color: white"></i></span>
+          <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG2"><span class="icon"><i class="icon-chevron-down" ></i></span>
             <h5>Latest Posts</h5>
           </div>
           {% for Post in name %}
@@ -188,16 +202,17 @@
                 <div class="article-post"> <span class="user-info">{{ Profile.title }} </span>
                 <br/>
                 <h4 style="margin-top: -10px">{{ Post.title }}</h4>
-                 <pre><code style="margin-left: -20px">
+                <p style="margin-left: 0px; background-color: lightgrey">
                    {{ Post.text| linebreaksbr }}
-                 </code></pre>
-              </li>
-                <button class="btn btn-warning btn-mini"><a href="delete{{ Profile.id }}">Delete</a></button>
-              </li>
+                 </p>
             </ul>
             {% endfor %}
           </div>
         </div>
+
+         {% for user in filter.qs %}
+           <li>{{ user.username }} - {{ user.get_full_name }}</li>
+        {% endfor %}
 
         
 

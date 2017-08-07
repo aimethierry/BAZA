@@ -15,6 +15,14 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+#emails
+
+DEFAULT_FROM_EMAIL = 'testing@example.com'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False 
+EMAIL_PORT = 1025
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -27,19 +35,34 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#account activation
+ACCOUNT_ACTIVATION_DAYS = 7
+ACCOUNT_INVITATION_DAYS = 7
+INVITATIONS_PER_USER = 3
+INVITE_MODE = True
+
 
 # Application definition
 
 INSTALLED_APPS = [
-    'myblog',
-    'socket_server',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+    #'paypal.standard.ipn',
+    #my blog 
+    'myblog',
+
+    ]
+
+PAYPAL_TEST = True
+
+#new auth but i dont know if its needed
+AUTH_PROFILE_MODULE = 'myapp.UserProfile'
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -120,12 +143,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
-    ]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+STATIC_ROOT = os.path.join(BASE_DIR,"static_in_env", "static_root")
+    
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR,"baza_project","static_in_pro"),
+)
 MEDIA_URL = '/media/'
-LOGIN_REDIRECT_URL = '/'
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "media_root")
+
+LOGIN_REDIRECT_URL = 'new'
 AUTH_PROFILE_MODULE = 'myblog.UserProfile'
+
+#paypall payment settings
+# PAYPAL_API_USERNAME = 'aime.thierry97@gmail.com'
+# PAYPAL_API_PASSWORD = 'mamanb123'
+# PAYPAL_API_SIGNATURE = '1234'

@@ -1,21 +1,118 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import User, Post, Answer, Notification
-from .forms import PostForm, SignUpForm, AnswerForm, PasswordResetRequestForm
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
+from .models import User, Post, Answer, Notification, Comment, Project, School, Document
+from .forms import PostForm, SignUpForm, AnswerForm, PasswordResetRequestForm,DocumentForm,CommentForm, ProjectForm,UserForm, SchoolForm
 from django.contrib.auth import authenticate,login, logout
+from django.contrib.auth import authenticate, login
 from django.core.files.storage import FileSystemStorage
 from django.templatetags.static import static
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 import datetime
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import send_mail
+#from .filters import UserFilter
+import operator
+from django.db.models import Q
+#from paypal.standard.forms import PayPalPaymentsForm
+from django.core.urlresolvers import reverse
+import requests 
+from django.contrib.auth import authenticate, login
+from django.views import generic
+from django.views.generic import View
+from django.core.files.storage import FileSystemStorage
+from django.views.generic import View
+#from django.time import timezone
+# class userTimeView(View):
+#     template_name='user.html'
+#     def get_context_data(self,*args,**kwargs)
+#         context = super(userTimeView, self).get_context_data(*args,*kwargs)
+#         time=timezone.now()
+#         context['time']=time
+#         if self.request.user.is_authenticated:
+#            self.request.session["time_now"]=time
+#         self.request.session["time_out"]=
+#         return context
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserForm()
+    return render(request, 'myblog/home.html', {'form': form})
 
 
-send_mail('Subject here', 'Here is the message.', 'from@example.com', ['to@example.com'], fail_silently=False)
+@login_required
+def model_form_upload(request):
+    name = Document.objects.all()
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('model_form_upload')
+    else:
+        form = DocumentForm()
+    return render(request, 'myblog/registration.html', {
+        'form': form,'name':name
+    })
 
+
+#home of the platform    
+def home(request):
+    name = SchoolForm()
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserForm()
+    return render(request,'myblog/home.html',{'form':form,'name':name })
+
+
+def project(request):
+    name = Project.objects.all()
+    science=Project.objects.filter(field='science').order_by('created_date').reverse()
+    arts=Post.objects.filter(field='science').order_by('created_date').reverse()
+    skills=Post.objects.filter(field='science').order_by('created_date').reverse()
+    if request.method == "POST":
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            answer = form.save()
+            return redirect('project')
+    else:
+        form = ProjectForm()
+    return render(request, 'myblog/project.html', {'form': form, 'name':name,'name':name, 'science':science,'arts':arts,'skills':skills})
+
+#teachers
+def teachers(request):
+    return render(request,'myblog/teachers.html')
+
+def science(request):
+    filtered=Post.objects.filter(field='science').order_by('created_date').reverse()
+    return render(request, 'myblog/project.html', {'filtered': filtered })
+
+def arts(request):
+    filtered=Post.objects.filter(field='arts').order_by('created_date').reverse()
+    return render(request, 'myblog/project.html', {'filtered': filtered })
+
+def skills(request):
+    filtered=Post.objects.filter(field='skills').order_by('created_date').reverse()
+    return render(request, 'myblog/project.html', {'filtered': filtered })
 
 
 #list of all post
@@ -60,56 +157,8 @@ def change_password(request):
         'form': form
     })
 
-
-# addpost
-@login_required
-def add(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author=request.user
-            post.save()
-            return redirect('add')
-    else:
-        form = PostForm()
-    return render(request, 'myblog/add.html', {'form': form})
-
-
-#question detail
-@login_required
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'myblog/post_detail.html', {'post': post})
-
-#notifications
-@login_required
-def notifications(request):
-    notifications=Notification.objects.filter(created_date=datetime.date.today()).order_by('created_time').reverse()
-    notification_count=Notification.objects.filter(created_date=datetime.date.today()).count()
-    return render(request,'myblog/notification.html',{'notifications':notifications,'notification_count':notification_count})
-
-
-#signup
-@login_required
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('index')
-    else:
-        form = SignUpForm()
-    return render(request, 'registration.html', {'form': form})
-
-#answer
-
-@login_required
-def answer(request, pk):
+#how to add comment to the post
+def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         form = AnswerForm(request.POST)
@@ -122,6 +171,109 @@ def answer(request, pk):
         form = AnswerForm()
     return render(request, 'myblog/answer.html', {'form': form})
 
+# addpost
+@login_required
+def add(request):
+    name = Document.objects.all()
+    if request.method == "POST":
+        form = DocumentForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author=request.user
+            post.save()
+            return redirect('add')
+    else:
+        form = PostForm()
+    return render(request, 'myblog/add.html', {'form': form,'name':name })
+
+
+#save school data
+def save_school(request):
+    form = SchoolForm()
+    if request.method =="POST":
+        form = SchoolForm(request.POST)
+        if form.is_valid():
+            name = form.save()
+            return redirect('save_school')
+    return render(request, 'myblog/home.html', {'form':form})
+
+#question detail
+@login_required
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'myblog/post_detail.html', {'post': post})
+
+#comment details post
+@login_required
+def post_comment(request):
+    name = Comment.objects.all()
+    return render(request, 'myblog/display_comment.html', {'name': name})
+#notifications
+@login_required
+def notifications(request):
+    notifications=Notification.objects.filter(created_date=datetime.date.today()).order_by('created_time').reverse()
+    notification_count=Notification.objects.filter(created_date=datetime.date.today()).count()
+    return render(request,'myblog/notification.html',{'notifications':notifications,'notification_count':notification_count})
+
+#new its a new index which ill be following
+@login_required
+def new(request):
+    name = Post.objects.all().order_by('created_date').reverse()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('new')
+    else:
+        form = PostForm()
+    return render(request, 'myblog/new.html', {
+        'form': form, 'name':name})
+
+
+#answ
+def answ(album_id, request):
+    name = get_object_or_404(Document, pk=album_id)
+    context = {'name':name}
+    return render(request,'myblog/answer.html', context)
+
+
+def post(request):
+    name = Document.objects.all()
+    return render(request,'home.html',{'name':name})
+
+
+
+
+@login_required
+def answer(request, pk_id):
+    post = get_object_or_404(Post, pk=pk_id )
+    return render(request, 'myblog/answer.html', {'post': post})
+
+#comment on an answer
+def comment(request):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.post = post
+            answer.save()
+            return redirect('new', pk=post.pk)
+    else:
+        form = AnswerForm()
+    return render(request,'myblog/yy.html', {'name':name})
+
+
+
+
+def detail(request):
+    filtered=Post.objects.filter(field='Mathematics').order_by('created_date').reverse()
+    return render(request,'myblog/yy.html', { 'filtered':filtered})
+    
+#display comment
+def display_comment(request):
+    name = Comment.objects.all()
+    return render(request,'myblog/comment.html', {'name':name})
 
 @login_required
 def chemistry(request):
@@ -136,48 +288,49 @@ def math(request):
 
 @login_required
 def computer(request):
-    filtered=Post.objects.filter(field= 'Computer')
+    filtered=Post.objects.filter(field= 'Computer').order_by('created_date').reverse()
     return render(request, 'blog/computer.html', {'filtered': filtered})
 
 @login_required
 def history(request):
-    filtered=Post.objects.filter(field= 'History')
-    return render(request, 'blog/history.html', {'posts': posts})
+    filtered=Post.objects.filter(field= 'History').order_by('created_date').reverse()
+    return render(request, 'myblog/hist.html', {'filtered': filtered})
 
 @login_required
 def economics(request):
-    filtered=Post.objects.filter(field= 'Economics')
-    return render(request, 'blog/economics.html', {'posts': posts})
+    filtered=Post.objects.filter(field= 'Economics').order_by('created_date').reverse()
+    return render(request, 'myblog/econ.html', {'filtered': filtered})
 
 @login_required
 def geography(request):
-    filtered=Post.objects.filter(field= 'Geography')
-    return render(request, 'blog/geography.html', {'posts': posts})
+    filtered=Post.objects.filter(field= 'Geography').order_by('created_date').reverse()
+    return render(request, 'myblog/geo.html', {'filtered': filtered})
 
 def literature(request):
 
-    filtered=Post.objects.filter(field= 'Literature')
-    return render(request, 'blog/literature.html', {'posts': posts})
+    filtered=Post.objects.filter(field= 'Literature').order_by('created_date').reverse()
+    return render(request, 'myblog/lit.html', {'filtered': filtered})
 
 
 def biology(request):
-    filtered=Post.objects.filter(field= 'Biology')
-    return render(request, 'blog/biology.html', {'filtered': filtered})
+    filtered=Post.objects.filter(field= 'Biology').order_by('created_date').reverse()
+    return render(request, 'myblog/bio.html', {'filtered': filtered})
 
 
+@login_required
 def physics(request):
-    filtered=Post.objects.all()
-    context = {'filtered': filtered}
-    return render(request, 'myblog/phy.html', context)
+    name=Post.objects.filter(field='Physics').order_by('created_date').reverse()
+    return render(request, 'myblog/phy.html', {'name': name })
+
 
    
 
 @login_required
 def entrepreneurship(request):
-    filtered=Post.objects.filter(field= 'Entrepreneurship')
-    return render(request, 'blog/ent.html', {'posts': posts})
+    filtered=Post.objects.filter(field= 'Entrepreneurship').order_by('created_date').reverse()
+    return render(request, 'myblog/ent.html', {'filtered': filtered})
 
 @login_required
 def computer(request):
-    filtered=Post.objects.filter(field= 'Computer')
-    return render(request, 'blog/comp.html', {'posts': posts})
+    filtered=Post.objects.filter(field= 'Computer').order_by('created_date').reverse()
+    return render(request, 'blog/comp.html', {'filtered': fitlered})

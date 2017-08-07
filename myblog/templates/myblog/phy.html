@@ -162,11 +162,12 @@
           <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG2"><span class="icon"><i class="icon-chevron-down" style="background-color: white"></i></span>
             <h5>Latest Posts</h5>
           </div>
-          {% for Post in filtered %}
+          {% for Post in name %}
           <div class="widget-content nopadding collapse in" id="collapseG2">
             <ul class="recent-posts">
               <li>
                 <div class="user-thumb"> <img width="40" height="40" alt="User" src="{% static 'img/demo/av1.jpg' %}" style="margin-top: 0px"> </div>
+                <div class="article-post"> <span class="user-info">{{ Profile.title }} </span>
                 <br/>
                <h4><a href="{% url 'post_detail' pk=Post.pk  %}">{{ Post.title }}</a></h4>
                  <pre><code style="margin-left: -20px">

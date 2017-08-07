@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css"
+            href="{% static 'mathfield/css/mathfield.css' %}">
+    </head>
+    <body>
+        <div>
+            Raw text/LaTeX: {{ lesson.lesson_plan.raw }}
+        </div>
+        <div>
+            Rendered HTML: {{ lesson.lesson_plan.html|safe }}
+        </div>
+    </body>
+</html>
